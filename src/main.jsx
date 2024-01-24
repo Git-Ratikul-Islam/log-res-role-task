@@ -9,11 +9,16 @@ import {
 import SignUP from './assets/Pages/UserAuth/SignUP';
 import Login from './assets/Pages/UserAuth/Login';
 import AuthProvider from './providers/AuthProvider';
+import Home from './assets/Pages/Home/Home';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <SignUP></SignUP>,
+    element: <Home></Home>,
+  },
+  {
+    path: "/signUp",
+    element: <SignUP></SignUP>
   },
   {
     path: "/login",
