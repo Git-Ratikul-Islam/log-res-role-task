@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
 
 
 const Login = () => {
+
       const navigate = useNavigate();
       const { signIn, googleSignIn } = useContext(AuthContext);
       const handleLogIn = e => {
@@ -23,7 +24,7 @@ const Login = () => {
                               'success'
                         );
                         e.target.reset();
-                        Navigate('/');
+                        navigate('/');
                   });
       };
       const handleGoogleSignIn = () => {

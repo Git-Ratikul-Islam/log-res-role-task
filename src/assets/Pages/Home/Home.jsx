@@ -1,11 +1,14 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 
 const Home = () => {
-      const { logOut, user } = useContext(AuthContext);
+      const { logOut } = useContext(AuthContext);
+
+
+
       const navigate = useNavigate();
       const handleLogOut = () => {
             logOut()
@@ -18,6 +21,8 @@ const Home = () => {
                         );
                         navigate('/login');
                   });
+
+
 
 
       };
@@ -33,12 +38,12 @@ const Home = () => {
                               <a href="#" className="flex items-center px-3 py-2.5 font-bold bg-white  text-indigo-900 border rounded-full">
                                     User Profile
                               </a>
-                              <a href="#"
+                              <Link to="/admin">  <a href=""
                                     className="flex items-center px-3 py-2.5 font-semibold  hover:text-indigo-900 hover:border hover:rounded-full">
                                     Admin
-                              </a>
+                              </a></Link>
                               <div onClick={handleLogOut}>
-                                    <a href="#"
+                                    <a href=""
                                           className="flex items-center px-3 py-2.5 font-semibold  hover:text-indigo-900 hover:border hover:rounded-full">
                                           Log Out
                                     </a>
@@ -49,24 +54,20 @@ const Home = () => {
                   <main className="w-full min-h-screen py-1 md:w-2/3 lg:w-3/4">
                         <div className="p-2 md:p-4">
                               <div className="w-full px-6 pb-8 mt-8 sm:max-w-xl sm:rounded-lg">
-                                    <h2 className="pl-6 text-2xl font-bold sm:text-xl">User Profile</h2>
+                                    <h2 className="pl-6 text-2xl font-bold sm:text-xl"></h2>
 
                                     <div className="grid max-w-2xl mx-auto mt-8">
                                           <div className="flex flex-col items-center space-y-5 sm:flex-row sm:space-y-0">
 
                                                 <img className="object-cover w-40 h-40 p-1 rounded-full ring-2 ring-indigo-300 dark:ring-indigo-500"
-                                                      src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60"
-                                                      alt="Bordered avatar" />
+                                                      src="" />
 
                                                 <div className="flex flex-col space-y-5 sm:ml-8">
                                                       <button type="button"
                                                             className="py-3.5 px-7 text-base font-medium text-indigo-100 focus:outline-none bg-[#202142] rounded-lg border border-indigo-200 hover:bg-indigo-900 focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
-                                                            Change picture
+                                                            Update Image
                                                       </button>
-                                                      <button type="button"
-                                                            className="py-3.5 px-7 text-base font-medium text-indigo-900 focus:outline-none bg-white rounded-lg border border-indigo-200 hover:bg-indigo-100 hover:text-[#202142] focus:z-10 focus:ring-4 focus:ring-indigo-200 ">
-                                                            Delete picture
-                                                      </button>
+
                                                 </div>
                                           </div>
 

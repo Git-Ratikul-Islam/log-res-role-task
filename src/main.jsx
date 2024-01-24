@@ -10,11 +10,13 @@ import SignUP from './assets/Pages/UserAuth/SignUP';
 import Login from './assets/Pages/UserAuth/Login';
 import AuthProvider from './providers/AuthProvider';
 import Home from './assets/Pages/Home/Home';
+import Admin from './assets/Pages/Admin/Admin';
+import PrivateRoute from './providers/PrivateRoute';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>,
+    element: <PrivateRoute><Home></Home></PrivateRoute>,
   },
   {
     path: "/signUp",
@@ -23,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login></Login>
+  },
+  {
+    path: "/admin",
+    element: <Admin></Admin>
   }
 ]);
 

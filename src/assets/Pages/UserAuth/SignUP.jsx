@@ -9,34 +9,35 @@ const SignUP = () => {
       const navigate = useNavigate();
 
 
-      const handleSignUp = e => {
+      const handleSignUp = async (e) => {
             e.preventDefault();
             const form = e.target;
+            // eslint-disable-next-line no-unused-vars
             const name = form.name.value;
             const email = form.email.value;
             const password = form.password.value;
-            console.log(name, email, password);
 
-            createUser(email, password)
-                  .then(result => {
-                        console.log(result.user);
-                        e.target.reset();
-                        Swal.fire(
-                              'Login Successful!',
-                              'User created successfully!',
-                              'success'
-                        );
-                        navigate('/');
-                  })
-                  .catch(error => {
-                        if (error.code === 'auth/email-already-in-use') {
-                              Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: 'Email is already in use. Please choose another email address.',
-                              });
-                        }
-                  });
+            try {
+                  const result = await createUser(email, password);
+                  console.log(result.user);
+
+                  localStorage.setItem('userInfo', JSON.stringify({ email, password }));
+                  e.target.reset();
+                  Swal.fire('Created Successful!', 'User created successfully!', 'success');
+                  navigate('/');
+
+            } catch (error) {
+                  if (error.code === 'auth/email-already-in-use') {
+                        Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: "Email already in use. Please choose other one"
+                        });
+                  }
+            }
+
+
+
 
       };
 
