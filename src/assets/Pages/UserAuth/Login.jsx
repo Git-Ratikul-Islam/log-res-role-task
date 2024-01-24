@@ -1,7 +1,53 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../providers/AuthProvider";
+import Swal from "sweetalert2";
 
 
 const Login = () => {
+      const navigate = useNavigate();
+      const { signIn, googleSignIn } = useContext(AuthContext);
+      const handleLogIn = e => {
+            e.preventDefault();
+            const form = e.target;
+            const email = form.email.value;
+            const password = form.password.value;
+            console.log(email, password);
+
+            signIn(email, password)
+                  .then(result => {
+                        console.log(result.user);
+                        Swal.fire(
+                              'Login Successful!',
+                              'User logged in successfully!',
+                              'success'
+                        );
+                        e.target.reset();
+                        Navigate('/');
+                  });
+      };
+      const handleGoogleSignIn = () => {
+            googleSignIn()
+                  .then(result => {
+                        console.log(result.user);
+                        Swal.fire(
+                              'login Success!',
+                              'User logged in succesfully!',
+                              'success'
+                        );
+
+                        navigate('/');
+                  })
+                  .catch(error => {
+                        console.error(error);
+                        Swal.fire({
+                              icon: 'error',
+                              title: 'Oops...',
+                              text: 'Something went wrong try again!',
+                        });
+                  });
+
+      };
       return (
             <div>
                   <section className="flex flex-col md:flex-row min-h-screen items-center w-5/6 mx-auto">
@@ -11,7 +57,7 @@ const Login = () => {
                         <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
                               <div className="w-full pb-[500px] md:pb-0 lg:pb-0">
                                     <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
-                                    <form className="mt-6" >
+                                    <form className="mt-6" onSubmit={handleLogIn} >
                                           <div>
                                                 <label className="block text-gray-700">Email Address</label>
                                                 <input
@@ -52,7 +98,7 @@ const Login = () => {
                                           type="button"
                                           className="w-full block bg-white hover-bg-gray-100 focus-bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
                                     >
-                                          <div className="flex items-center justify-center" >
+                                          <div className="flex items-center justify-center" onClick={handleGoogleSignIn} >
                                                 <svg
                                                       xmlns="http://www.w3.org/2000/svg"
                                                       xmlnsXlink="http://www.w3.org/1999/xlink"

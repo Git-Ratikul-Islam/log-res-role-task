@@ -1,7 +1,45 @@
 
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 const SignUP = () => {
+      const { createUser } = useContext(AuthContext);
+      const navigate = useNavigate();
+
+
+      const handleSignUp = e => {
+            e.preventDefault();
+            const form = e.target;
+            const name = form.name.value;
+            const email = form.email.value;
+            const password = form.password.value;
+            console.log(name, email, password);
+
+            createUser(email, password)
+                  .then(result => {
+                        console.log(result.user);
+                        e.target.reset();
+                        Swal.fire(
+                              'Login Successful!',
+                              'User created successfully!',
+                              'success'
+                        );
+                        navigate('/');
+                  })
+                  .catch(error => {
+                        if (error.code === 'auth/email-already-in-use') {
+                              Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Email is already in use. Please choose another email address.',
+                              });
+                        }
+                  });
+
+      };
+
       return (
             <section className="flex flex-col md:flex-row min-h-screen items-center w-5/6 mx-auto">
                   <div className="  lg:block w-full md:w-1/2 xl:w-1/2">
@@ -12,7 +50,7 @@ const SignUP = () => {
                               <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Create an account</h1>
 
                               {/* here form starts  */}
-                              <form className="mt-6">
+                              <form className="mt-6" onSubmit={handleSignUp}>
                                     <div>
                                           <label className="block text-gray-700">Name</label>
                                           <input
